@@ -1,0 +1,7 @@
+/*!!!
+ * yadk template sdk css 3.0.0
+ *
+ * author: liwenzhao
+ * Date: 2017-05-18
+ */
+body{margin:0}#img_wrap{display:inline-block;position:relative;overflow:hidden;font-size:0}#adlink{display:inline-block;position:relative;width:100%;font-size:0;text-decoration:none}#ad_logo{position:absolute;bottom:0;left:0;background-color:brown;color:#fff;font-size:14px;padding:2px}.yad_logo{display:block;height:20px;width:29px;text-align:justify;letter-spacing:20px;text-decoration:none;overflow:hidden;cursor:pointer;position:absolute;top:0;right:0;filter:progid: DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, src="//oimagea2.ydstatic.com/image?id=-2163412831137498105&product=adpublish", sizingMethod="image");background:url(//oimagea2.ydstatic.com/image?id=-2163412831137498105&product=adpublish) no-repeat left top;z-index:10;transition:width .5s;-webkit-transition:width .5s;-moz-transition:width .5s;-ms-transition:width .5s;-o-transition:width .5s}.yad_logo:hover{width:82px}#cover{opacity:0;display:none\9;position:absolute;left:0;top:0;width:100%;height:100%;background-color:#fff\0;background:rgba(255,250,250,.8);font-family:'Microsoft YaHei';color:#000;text-align:center;vertical-align:middle;z-index:5;transition:opacity .5s;-webkit-transition:opacity .5s;-moz-transition:opacity .5s;-ms-transition:opacity .5s;-o-transition:opacity .5s}#cover>.hint{position:absolute;width:100%;min-height:20px;left:0;top:50%;margin-top:-20px;text-align:center;font-size:18px;line-height:1.5}#adlink:hover>#cover{opacity:1;filter:alpha(opacity=80)\9;display:block\9}
