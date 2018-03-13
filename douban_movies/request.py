@@ -6,6 +6,7 @@ class UrlRequests:
     need_request_url_set = set()
     requested_url_set = set()
 
+
     def __init__(self):
         pass
 
