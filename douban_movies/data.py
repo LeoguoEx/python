@@ -1,31 +1,32 @@
 from lxml import etree
 import re
+from request import UrlRequests
 
 class DouBanMovie:
 
-    name = ""
-    director = []
-    writer = []
-    actors = []
-    type = []
-    location = ""
-    language = []
-    time = []
-    time_length = []
-    imdbLink = ""
-    description = ""
-    rating = 0.0
+    name = None
+    director = None
+    writer = None
+    actors = None
+    type = None
+    location = None
+    language = None
+    time = None
+    time_length = None
+    imdbLink = None
+    description = None
+    rating = None
 
 
     def __init__(self):
         pass
 
-    def parseHtml(self, text):
-        html = text
+    def parseHtml(self, html):
         self.name = self.__get_first_content__(html, '//span[@property="v:itemreviewed"]/text()')
         self.__getDivInfo__(html)
         self.description = self.__get_first_content__(html, '//span[@property="v:summary"]/text()').strip('\r\n ')
         self.rating = float(self.__get_first_content__(html, '//strong[@class="ll rating_num"]/text()'))
+        self.__add_next_url__(html)
 
     def print(self):
         print("name : {0}".format(self.name))
@@ -40,6 +41,12 @@ class DouBanMovie:
         print("imdbLink : {0}".format(self.imdbLink))
         print("description : {0}".format(self.description))
         print("rating : {0}".format(self.rating))
+
+    def __add_next_url__(self, html):
+        elements = self.__getcontent__(html, '', '//div[@class="recommendations-bd"]//@href')
+        request = UrlRequests()
+        for element in elements:
+            request.addNeedRequestUrl(element)
 
     def __get_first_content__(self, html, path):
         list = html.xpath(path)
@@ -78,5 +85,4 @@ class DouBanMovie:
     def __getLanguage__(self, pattern, html, parent):
         content = self.__re_content__(pattern, html, parent)
         content = content.split(' / ')
-        for element in content:
-            self.language.append(element)
+        self.language = content
