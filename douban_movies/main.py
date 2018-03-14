@@ -2,12 +2,12 @@ from request import UrlRequests
 from data_manager import DataManager
 
 def main(url):
-
     data_manager = DataManager()
     request = UrlRequests()
     request.setRequestEndAction(data_manager.parseHtml)
     request.addNeedRequestUrl(url)
-    
+    while(request.requestNext()):
+        request.request()
 
 
     '''    
@@ -29,4 +29,4 @@ def main(url):
     '''
 
 if __name__ == "__main__":
-    main()
+    main('https://movie.douban.com/subject/6390825/?from=showing')

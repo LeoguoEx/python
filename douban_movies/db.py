@@ -7,8 +7,7 @@ class DB:
     __port__ = 3306
     __user_name__ = 'root'
     __password__ = ''
-
-    __cursor__ = None
+    __db_name__ = 'test'
 
     __save_tick__ = 20
 
@@ -23,11 +22,11 @@ class DB:
                         MOVIE_TIME CHAR(20),
                         MOVE_TIME_LENGTH CHAR(10),
                         IMDB_LINK CHAR(40),
-                        DESCRIPTION CHAR(600),
+                        DESCRIPTION TEXT,
                         RATING FLOAT NOT NULL )"""
 
     insert_table_sql = """INSERT INTO MOVIES(MOVIE_NAME, DIRECTOR, WRITER, ACTORS, MOVIE_TYPE, LOCATION, MOVIE_LANGUAGE, MOVIE_TIME, MOVE_TIME_LENGTH,IMDB_LINK,DESCRIPTION,RATING) VALUES 
-                                              ({0}, {1}, {2}, {3}, {4}, {5}, {6},{7}, {8}, {9}, {10}, {11})"""
+                                              ({0}, {1}, {2}, {3}, {4}, {5}, {6},{7}, {8}, {9}, {10})"""
 
     __instance = None
     def __new__(cls, *args, **kwargs):
@@ -35,25 +34,30 @@ class DB:
             cls.__instance = super(DB, cls).__new__(cls, *args, ** kwargs)
         return cls.__instance
 
+    def __getDb__(self):
+        db = pymysql.connect(host=self.__host__, port=self.__port__, user=self.__user_name__, password=self.__password__, db=self.__db_name__)
+        return db
+
     def __init__(self):
-        self.getDBCursor()
-        self.excuteSql(self.create_table_sql)
+        db = self.__getDb__()
+        cursor = db.cursor()
+        try:
+            cursor.execute(self.create_table_sql)
+            db.commit()
+            cursor.close()
+        finally:
+            pass
 
-
-    def getDBCursor(self):
-        db = pymysql.connect(host=self.__host__, port=self.__port__, user=self.__user_name__, password=self.__password__)
-        self.__cursor__ = db.cursor()
-
-    def excuteSql(self, sql):
-        if self.__cursor__ is not None:
-            self.__cursor__.execute(sql)
-
-    def insertMovieInfo(self, movie):
-        if movie is not None and movie is DouBanMovie:
-            movie = DouBanMovie()
-            sql = self.insert_table_sql.format(movie.name, movie.director, movie.actors, movie.type, movie.location, movie.language, movie.time, movie.time_length,
+    def insertMovies(self, movies):
+        db = self.__getDb__()
+        cursor = db.cursor()
+        try:
+            if movies is not None:
+                for movie in movies:
+                    sql = self.insert_table_sql.format(movie.name, movie.director, movie.actors, movie.type, movie.location, movie.language, movie.time, movie.time_length,
                                                movie.imdbLink, movie.description, movie.rating)
-            self.excuteSql(sql)
-
-    def update(self):
-        pass
+                    cursor.execute(sql)
+            db.commit()
+            cursor.close()
+        finally:
+            pass

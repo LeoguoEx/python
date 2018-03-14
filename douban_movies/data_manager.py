@@ -1,6 +1,8 @@
 #用于数据管理，存入db
 
 from data import DouBanMovie
+from db import DB
+from lxml import etree
 
 class DataManager:
 
@@ -16,6 +18,14 @@ class DataManager:
         pass
 
     def parseHtml(self, html):
+        html = etree.HTML(html)
         data = DouBanMovie()
         data.parseHtml(html)
         self.movie_datas.append(data)
+        self.__writeToDB__()
+
+    def __writeToDB__(self):
+         if len(self.movie_datas) > 1:
+            db = DB()
+            db.insertMovies(self.movie_datas)
+            self.movie_datas.clear()

@@ -25,7 +25,11 @@ class DouBanMovie:
         self.name = self.__get_first_content__(html, '//span[@property="v:itemreviewed"]/text()')
         self.__getDivInfo__(html)
         self.description = self.__get_first_content__(html, '//span[@property="v:summary"]/text()').strip('\r\n ')
-        self.rating = float(self.__get_first_content__(html, '//strong[@class="ll rating_num"]/text()'))
+        rating = self.__get_first_content__(html, '//strong[@class="ll rating_num"]/text()')
+        try:
+            self.rating = float(rating)
+        except:
+            self.rating = 0.0
         self.__add_next_url__(html)
 
     def print(self):
