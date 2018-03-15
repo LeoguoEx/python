@@ -88,5 +88,6 @@ class DouBanMovie:
 
     def __getLanguage__(self, pattern, html, parent):
         content = self.__re_content__(pattern, html, parent)
-        content = content.split(' / ')
+        if content is not None:
+            content = content.split(' / ')
         self.language = content

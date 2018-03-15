@@ -9,13 +9,11 @@ def main(url):
     while(request.requestNext()):
         request.request()
 
-
     '''    
     data = DouBanMovie();
     html = etree.parse('黑豹 (豆瓣).htm', etree.HTMLParser())
     data.parseHtml(html)
-    data.print()
-    
+    data.print()    
     
     request = UrlRequests()
     request.addNeedRequestUrl('https://movie.douban.com/subject/3878007/?from=subject-page')
