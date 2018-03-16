@@ -2,6 +2,7 @@
 import requests
 import time
 import random
+import datetime
 
 class UrlRequests:
     need_request_url_set = set()
@@ -26,6 +27,8 @@ class UrlRequests:
                "121.231.54.109:6666",
                "121.231.54.109:61202",
                "14.20.235.212:9797"]
+
+    random.seed(datetime.datetime.now())
 
     __instance = None
     def __new__(cls, *args, **kwargs):
@@ -71,8 +74,10 @@ class UrlRequests:
         if url is not None:
             try:
                 time.sleep(self.SLEEP_TIME)
-                print("request url : {0}".format(url))
-                r = requests.get(url, headers=self.headers, );
+                proxies = self.proxies[random.randint(0, len(self.proxies) - 1)]
+                prox = {'https': 'https://' + proxies}
+                print('url : {0}      proxies : {1}'.format(url, proxies))
+                r = requests.get(url, headers=self.headers)#, proxies=prox);
                 return r.content
             except requests.RequestException as ex:
                 if errorCount > 0:

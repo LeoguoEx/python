@@ -17,7 +17,6 @@ class DouBanMovie:
     description = None
     rating = None
 
-
     def __init__(self):
         pass
 
@@ -31,17 +30,18 @@ class DouBanMovie:
         except:
             self.rating = 0.0
         self.__add_next_url__(html)
+        self.print()
 
     def print(self):
         print("name : {0}".format(self.name))
-        print("director : {0}".format(self.director))
-        print("writer : {0}".format(self.writer))
-        print("actors : {0}".format(self.actors))
-        print("type : {0}".format(self.type))
+        print("director : {0}".format(','.join(self.director)))
+        print("writer : {0}".format(','.join(self.writer)))
+        print("actors : {0}".format(','.join(self.actors)))
+        print("type : {0}".format(','.join(self.type)))
         print("location : {0}".format(self.location))
-        print("language : {0}".format(self.language))
-        print("time : {0}".format(self.time))
-        print("time_length : {0}".format(self.time_length))
+        print("language : {0}".format(','.join(self.language)))
+        print("time : {0}".format(','.join(self.time)))
+        print("time_length : {0}".format(','.join(self.time_length)))
         print("imdbLink : {0}".format(self.imdbLink))
         print("description : {0}".format(self.description))
         print("rating : {0}".format(self.rating))
