@@ -30,21 +30,6 @@ class DouBanMovie:
         except:
             self.rating = 0.0
         self.__add_next_url__(html)
-        self.print()
-
-    def print(self):
-        print("name : {0}".format(self.name))
-        print("director : {0}".format(','.join(self.director)))
-        print("writer : {0}".format(','.join(self.writer)))
-        print("actors : {0}".format(','.join(self.actors)))
-        print("type : {0}".format(','.join(self.type)))
-        print("location : {0}".format(self.location))
-        print("language : {0}".format(','.join(self.language)))
-        print("time : {0}".format(','.join(self.time)))
-        print("time_length : {0}".format(','.join(self.time_length)))
-        print("imdbLink : {0}".format(self.imdbLink))
-        print("description : {0}".format(self.description))
-        print("rating : {0}".format(self.rating))
 
     def __add_next_url__(self, html):
         elements = self.__getcontent__(html, '', '//div[@class="recommendations-bd"]//@href')
@@ -91,3 +76,8 @@ class DouBanMovie:
         if content is not None:
             content = content.split(' / ')
         self.language = content
+
+    def getDBStr(self, list):
+        if list is None:
+            return ""
+        return ','.join(list)

@@ -43,7 +43,7 @@ class DB:
         try:
             if movies is not None:
                 for movie in movies:
-                    param = (movie.name, ','.join(movie.director), ','.join(movie.writer), ','.join(movie.actors), ','.join(movie.type), movie.location, ','.join(movie.language),  ','.join(movie.time),  ','.join(movie.time_length), movie.imdbLink, movie.description, movie.rating)
+                    param = (movie.name, movie.getDBStr(movie.director), movie.getDBStr(movie.writer), movie.getDBStr(movie.actors), movie.getDBStr(movie.type), movie.location, movie.getDBStr(movie.language),  movie.getDBStr(movie.time), movie.getDBStr(movie.time_length), movie.imdbLink, movie.description, movie.rating)
                     cursor.execute(self.insert_table_sql% param)
             db.commit()
             cursor.close()
