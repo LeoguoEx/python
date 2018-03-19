@@ -25,7 +25,7 @@ class DataManager:
         self.__writeToDB__()
 
     def __writeToDB__(self):
-         if len(self.movie_datas) > 1:
+         if len(self.movie_datas) > 10:
             db = DB()
             db.insertMovies(self.movie_datas)
             self.movie_datas.clear()

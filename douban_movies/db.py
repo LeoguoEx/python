@@ -11,9 +11,9 @@ class DB:
 
     __save_tick__ = 20
 
-    create_table_sql = """CREATE TABLE IF NOT EXISTS MOVIES(MOVIE_ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,MOVIE_NAME VARCHAR(20),DIRECTOR VARCHAR(40),WRITER VARCHAR(40),ACTORS VARCHAR(64),MOVIE_TYPE VARCHAR(20),LOCATION VARCHAR(20),MOVIE_LANGUAGE VARCHAR(20),MOVIE_TIME VARCHAR(20),MOVE_TIME_LENGTH VARCHAR(20),IMDB_LINK CHAR(40),DESCRIPTION TEXT,RATING FLOAT NOT NULL )"""
+    create_table_sql = """CREATE TABLE IF NOT EXISTS MOVIES(MOVIE_ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,MOVIE_NAME VARCHAR(40),DIRECTOR VARCHAR(40),WRITER VARCHAR(100),ACTORS VARCHAR(200),MOVIE_TYPE VARCHAR(80),LOCATION VARCHAR(40),MOVIE_LANGUAGE VARCHAR(40),MOVIE_TIME VARCHAR(40),MOVE_TIME_LENGTH VARCHAR(40),IMDB_LINK CHAR(40),DESCRIPTION TEXT,RATING FLOAT NOT NULL )"""
 
-    insert_table_sql = """INSERT INTO MOVIES(MOVIE_NAME, DIRECTOR, WRITER, ACTORS, MOVIE_TYPE, LOCATION, MOVIE_LANGUAGE, MOVIE_TIME, MOVE_TIME_LENGTH, IMDB_LINK, DESCRIPTION, RATING) VALUES (%s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %f)"""
+    insert_table_sql = """INSERT INTO MOVIES(MOVIE_NAME, DIRECTOR, WRITER, ACTORS, MOVIE_TYPE, LOCATION, MOVIE_LANGUAGE, MOVIE_TIME, MOVE_TIME_LENGTH, IMDB_LINK, DESCRIPTION, RATING) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%f')"""
 
     __instance = None
     def __new__(cls, *args, **kwargs):
@@ -39,22 +39,15 @@ class DB:
         db = self.__getDb__()
         cursor = db.cursor()
 
-        if movies is not None:
-            for movie in movies:
-                param = (movie.name, ','.join(movie.director), ','.join(movie.writer), ','.join(movie.actors), ','.join(movie.type), movie.location, ','.join(movie.language),  ','.join(movie.time),  ','.join(movie.time_length), movie.imdbLink, movie.description, movie.rating)
-                cursor.execute(self.insert_table_sql, param)
-        db.commit()
-        cursor.close()
-        '''
+
         try:
             if movies is not None:
                 for movie in movies:
-                    param = (movie.name, movie.director, movie.writer, movie.actors, movie.type, movie.location, movie.language, movie.time, movie.time_length, movie.imdbLink, movie.description, movie.rating)
-                    cursor.execute(self.insert_table_sql % param)
+                    param = (movie.name, ','.join(movie.director), ','.join(movie.writer), ','.join(movie.actors), ','.join(movie.type), movie.location, ','.join(movie.language),  ','.join(movie.time),  ','.join(movie.time_length), movie.imdbLink, movie.description, movie.rating)
+                    cursor.execute(self.insert_table_sql% param)
             db.commit()
             cursor.close()
         except:
             db.rollback()
         finally:
             pass
-        '''
