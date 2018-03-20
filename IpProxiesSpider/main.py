@@ -1,27 +1,23 @@
 import time
-from random import random
-from threading import Thread, Semaphore
+import Spider
+import IPProxies
+import Urls
 
-sema = Semaphore(3)
-
-def foo(tid):
-    with sema:
-        print('{0} acquire sema'.format(tid))
-        wt = random() * 2
-        time.sleep(wt)
-    print('{} release sema'.format(tid))
+def getIPProxies():
+    pass
 
 def main():
-    threads = []
+    for i in 9:
+        urls.addUrl('http://www.xicidaili.com', '/nn/{0}'.format(i+1))
 
-    for i in range(5):
-        t = Thread(target=foo, args=(i, ))
-        threads.append(t)
-        t.start()
-
-    for t in threads:
-        t.join()
+    while urls.isEnd() is not True:
+        url = urls.getUrl()
+        content = spider.get(url)
+        if content is None:
+            pass
 
 
+urls = Urls()
+spider = Spider()
 if __name__ == '__main__':
     main()
