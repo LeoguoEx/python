@@ -10,40 +10,39 @@ class IPProxie(object):
         self.port = port
         self.protocol = protocol
 
+    def printProxie(self):
+        print("ip='%s'   port='%s'" % (self.ip, self.port))
+
     @staticmethod
     def parse(html):
         content = etree.HTML(html)
-        body_list = content.xpath('//tbody/tr')
-
-        proxies_dic = []
+        body_list = content.xpath('//table[@id="ip_list"]//tr')
+        proxies_list = []
         if body_list is not None:
-            for body in body_list:
-                proxie = IPProxie.parseBody(body)
+            for index in range(1, len(body_list) - 1):
+                proxie = IPProxie.__parseBody__(body_list[index])
                 if proxie is not None:
-                    proxies_dic.append(proxie)
-
-        return proxies_dic
+                    proxies_list.append(proxie)
+        return proxies_list
 
     @staticmethod
     def __parseBody__(body):
+        print(etree.tostring(body))
+        print(etree.tostring(body.xpath('/td[1]')))
         ip = body.xpath('/td[1]/text()')
         port = body.xpath('/td[2]/text()')
         protocol = body.xpath('/td[5]/text()')
-        speed = IPProxie.parseSlider(body.xpath('/td[6]'))
-        connect_time = IPProxie.parseSlider(body.xpath('/td[7]'))
+        speed = IPProxie.__parseSlider__(body.xpath('/td[6]/text()'))
+        connect_time = IPProxie.__parseSlider__(body.xpath('/td[7]/text()'))
 
         if speed >= 80 and connect_time >= 90:
             proxie = IPProxie(ip, port, protocol)
             return proxie
         return None
 
-
-
-
-
     @staticmethod
     def __parseSlider__(slider):
-        text = slider.xpath('text()')
+        text = slider
         pattern = re.compile('style="width:(.*)%"')
         content = re.findall(text, pattern)
         if len(content) > 0:

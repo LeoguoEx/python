@@ -10,7 +10,7 @@ class Urls(object):
             self.urls.add(url + append_url)
 
     def getUrl(self):
-        if self.isEnd():
+        if self.isEnd() is not True:
             url = self.urls.pop()
             self.requestedUrls.add(url)
             return url
