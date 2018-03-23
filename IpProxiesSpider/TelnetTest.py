@@ -7,10 +7,11 @@ class TelnetTest(object):
         pass
 
     def telnetTest(self, proxie):
+        result = True
         try:
-            print('test telnet !!!  ip : %s   port : %s' % (proxie.ip, proxie.port))
             tn = telnetlib.Telnet(proxie.ip, port=proxie.port, timeout=3)
-        except:
-            return False
+        except Exception as e:
+            result = False
         finally:
-            return True
+            print('test telnet !!!  ip : %s   port : %s   result : %s' % (proxie.ip, proxie.port, result))
+        return result
