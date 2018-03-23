@@ -1,5 +1,4 @@
 import pymysql
-from data import DouBanMovie
 
 class DB:
 
@@ -14,6 +13,8 @@ class DB:
     create_table_sql = """CREATE TABLE IF NOT EXISTS MOVIES(MOVIE_ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,MOVIE_NAME VARCHAR(40),DIRECTOR VARCHAR(40),WRITER VARCHAR(100),ACTORS VARCHAR(200),MOVIE_TYPE VARCHAR(80),LOCATION VARCHAR(40),MOVIE_LANGUAGE VARCHAR(40),MOVIE_TIME VARCHAR(40),MOVE_TIME_LENGTH VARCHAR(40),IMDB_LINK CHAR(40),DESCRIPTION TEXT,RATING FLOAT NOT NULL )"""
 
     insert_table_sql = """INSERT INTO MOVIES(MOVIE_NAME, DIRECTOR, WRITER, ACTORS, MOVIE_TYPE, LOCATION, MOVIE_LANGUAGE, MOVIE_TIME, MOVE_TIME_LENGTH, IMDB_LINK, DESCRIPTION, RATING) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%f')"""
+
+    select_table_sql = """SELECT IP, PORT FROM IPPROXIES """
 
     __instance = None
     def __new__(cls, *args, **kwargs):
@@ -51,3 +52,21 @@ class DB:
             db.rollback()
         finally:
             pass
+
+    def getProxies(self):
+        db = self.__getDb__()
+        cursor = db.cursor()
+        proxies = []
+
+        try:
+            cursor.execute(self.select_table_sql)
+            results = cursor.fetchall()
+            if results is not None:
+                for row in results:
+                    ip = '{0}:{1}'.format(row[0], row[1])
+                    proxies.append(ip)
+
+        except Exception as e:
+            print(e)
+        finally:
+            return proxies
