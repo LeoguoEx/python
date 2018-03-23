@@ -8,7 +8,7 @@ CREATE_TABLE = """CREATE TABLE IF NOT EXISTS IPPROXIES(\
                                            CONNECT_TIME INT NOT NULL)"""
 
 INSERT_TABLE = """INSERT INTO IPPROXIES(IP, PORT, PROTOCOL, SPEED, CONNECT_TIME) VALUES \
-                  (%s, %s, %s, %d, %d)"""
+                  ('%s', '%s', '%s', %d, %d)"""
 
 DROP_TABLE = """DROP TABLE IF EXISTS IPPROXIES"""
 

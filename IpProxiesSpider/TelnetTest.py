@@ -9,7 +9,7 @@ class TelnetTest(object):
     def telnetTest(self, proxie):
         try:
             print('test telnet !!!  ip : %s   port : %s' % (proxie.ip, proxie.port))
-            tn = telnetlib.Telnet(proxie.ip, port=proxie.port, timeout=10)
+            tn = telnetlib.Telnet(proxie.ip, port=proxie.port, timeout=3)
         except:
             return False
         finally:
