@@ -4,25 +4,15 @@ from Urls import Urls
 from TelnetTest import TelnetTest
 from Config import Config
 from DB import DB
-import logging
 import time
 import Sqls
 
 
-def infoPrinter(func):
-    def wrapper(*args):
-        logging.warning('%s is running' % func.__name__)
-        return func(*args)
-    return wrapper
-
-
-#@infoPrinter
 def printAvailableProxies(proxies):
     for proxie in proxies:
         proxie.printProxie()
 
 
-@infoPrinter
 def beginCrawler():
     content = getRightContent()
     if content is not None:
@@ -37,8 +27,6 @@ def beginCrawler():
         pass
 
 
-
-#@infoPrinter
 def getRightContent():
     if urls.isEnd() is not True:
         url = urls.getUrl()
@@ -50,13 +38,11 @@ def getRightContent():
     return None
 
 
-#@infoPrinter
 def getIPProxies(content):
     proxies = IPProxie.parse(content)
     return testIPProxies(proxies)
 
 
-#@infoPrinter
 def testIPProxies(proxies):
     list = []
     for proxie in proxies:
