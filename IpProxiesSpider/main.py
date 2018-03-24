@@ -62,7 +62,7 @@ def saveToDB(proxies):
 
 def main():
     while True:
-        for i in range(1, crawler_data.crawler_max_page_count):
+        for i in range(crawler_data.crawler_page_min, crawler_data.crawler_page_max):
             urls.addUrl('http://www.xicidaili.com', '/nn/{0}'.format(i))
         beginCrawler()
         print(len(proxies_list))
