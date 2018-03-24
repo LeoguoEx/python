@@ -17,15 +17,3 @@ class Spider(object):
         content = requests.get(url, headers=self.headers)
         content = content.content.decode(encoding='utf-8')
         return content
-
-        '''        
-        try:
-            self.headers["Referer"] = str(url)
-            content = requests.get(url, headers=self.headers)
-            content = content.content.decode(encoding='utf-8')
-            return content
-        except Exception as e:
-            print(e)
-            return None
-        '''
-

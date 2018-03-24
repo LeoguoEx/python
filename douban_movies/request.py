@@ -30,6 +30,7 @@ class UrlRequests:
     def request(self):
         url = self.__getUrl__()
         html = self.__request__(url)
+        self.requested_url_set.add(url)
         if self.request_end_action is not None:
             self.request_end_action(html)
 
