@@ -1,13 +1,12 @@
-
 class DBHosts(object):
 
     def __init__(self):
-        self.host = None
-        self.port = None
-        self.user = None
-        self.password = None
-        self.dbname = None
-        self.charset = None
+        self.host = 'localhost'
+        self.port = 3306
+        self.user = 'root'
+        self.password = ''
+        self.dbname = 'test'
+        self.charset = 'utf8'
 
     def getDict(self):
         dic = {"host" : self.host,

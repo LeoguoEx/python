@@ -81,11 +81,11 @@ config = None
 db = None
 proxies_list = None
 if __name__ == '__main__':
-    crawler_max_page_count = 9
+    crawler_max_page_count = 2
     sleep_time = 900
     per_link_sleep_time = 0.5
     config = Config()
-    db = DB(config.dbhosts)
+    db = DB(config.getData('DBHosts'))
     urls = Urls()
     spider = Spider()
     telnetTest = TelnetTest()
