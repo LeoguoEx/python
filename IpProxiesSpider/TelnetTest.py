@@ -6,10 +6,10 @@ class TelnetTest(object):
     def __init__(self):
         pass
 
-    def telnetTest(self, proxie):
+    def telnetTest(self, proxie, timeout):
         result = True
         try:
-            tn = telnetlib.Telnet(proxie.ip, port=proxie.port, timeout=3)
+            tn = telnetlib.Telnet(proxie.ip, port=proxie.port, timeout=timeout)
         except Exception as e:
             result = False
         finally:

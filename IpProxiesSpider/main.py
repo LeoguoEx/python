@@ -19,7 +19,7 @@ def beginCrawler():
         proxies = getIPProxies(content)
         proxies_list.extend(proxies)
 
-    time.sleep(per_link_sleep_time)
+    time.sleep(crawler_data.per_link_sleep_time)
 
     if urls.isEnd() is not True:
         beginCrawler()
@@ -46,7 +46,7 @@ def getIPProxies(content):
 def testIPProxies(proxies):
     list = []
     for proxie in proxies:
-        success = telnetTest.telnetTest(proxie)
+        success = telnetTest.telnetTest(proxie, crawler_data.telnet_time_out)
         if success:
             list.append(proxie)
     return list
@@ -62,18 +62,16 @@ def saveToDB(proxies):
 
 def main():
     while True:
-        for i in range(1, crawler_max_page_count):
+        for i in range(1, crawler_data.crawler_max_page_count):
             urls.addUrl('http://www.xicidaili.com', '/nn/{0}'.format(i))
         beginCrawler()
         print(len(proxies_list))
         printAvailableProxies(proxies_list)
         saveToDB(proxies_list)
-        time.sleep(sleep_time)
+        time.sleep(crawler_data.sleep_time)
 
 
-crawler_max_page_count = None
-sleep_time = None
-per_link_sleep_time = None
+crawler_data = None
 urls = None
 spider = None
 telnetTest = None
@@ -81,10 +79,8 @@ config = None
 db = None
 proxies_list = None
 if __name__ == '__main__':
-    crawler_max_page_count = 2
-    sleep_time = 900
-    per_link_sleep_time = 0.5
     config = Config()
+    crawler_data = config.getData('CrawlerStruct')
     db = DB(config.getData('DBHosts'))
     urls = Urls()
     spider = Spider()
