@@ -68,7 +68,7 @@ def main():
         print(len(proxies_list))
         printAvailableProxies(proxies_list)
         saveToDB(proxies_list)
-        time.sleep(crawler_data.sleep_time)
+        time.sleep(crawler_data.crawler_sleep_time)
 
 
 crawler_data = None

@@ -1,4 +1,3 @@
-from db import DB
 import random
 import datetime
 
@@ -8,16 +7,12 @@ class IpProxies(object):
         self.ipproxies = []
         self.seed = random.seed(datetime.datetime.now())
 
-    def flushIpProxies(self):
-        db = DB()
-        proxies = db.getProxies()
+    def flushIpProxies(self, proxies):
         if proxies is not None:
+            self.ipproxies.clear()
             self.ipproxies.extend(proxies)
 
     def getProxies(self):
-        if len(self.ipproxies) == 0:
-            self.flushIpProxies()
-
         index = random.randint(0, len(self.ipproxies))
         if (index > 0) and (index < len(self.ipproxies)):
             return self.ipproxies[index]
