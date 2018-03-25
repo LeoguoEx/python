@@ -8,6 +8,7 @@ class DB(object):
         self.dbhosts = dbhosts
         db = self.connectDB()
         self.excuteSql(db, Sqls.create_table_sql)
+        self.excuteSql(db, Sqls.create_requested_urls_sql)
         self.disconnectDB(db)
 
     def connectDB(self):

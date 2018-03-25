@@ -2,7 +2,7 @@ import requests
 
 class Spider(object):
 
-    def __init__(self, action, ip_proxie_action):
+    def __init__(self, action, ip_proxie_action, resquested_urls):
         self.headers =  {
                             "User-Agent" : "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0",
                             "Accept-Encoding" : "gzip,deflate,br",
@@ -10,11 +10,12 @@ class Spider(object):
 
         self.need_requests_url = set()
         self.requested_url = set()
+        for url in resquested_urls:
+            self.requested_url.add(url)
         self.action = action
         self.ip_proxie_action = ip_proxie_action
 
-    def get_next(self):
-        url = self.__get_url__()
+    def get_next(self, url):
         content = None
         if url is not None:
             ip_prox = self.ip_proxie_action()
@@ -38,7 +39,7 @@ class Spider(object):
             for url in urls:
                 self.add_request_url(url)
 
-    def __get_url__(self):
+    def get_url(self):
         if len(self.need_requests_url) > 0:
             url = self.need_requests_url.pop()
             self.requested_url.add(url)

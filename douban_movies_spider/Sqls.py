@@ -4,3 +4,7 @@ insert_table_sql = """INSERT INTO MOVIES(MOVIE_NAME, DIRECTOR, WRITER, ACTORS, M
 
 select_ip_proxies = """SELECT IP, PORT FROM IPPROXIES WHERE PROTOCOL='HTTP'"""
 
+create_requested_urls_sql = """CREATE TABLE IF NOT EXISTS URLS(URL_ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL, URL CHAR(100) NOT NULL)"""
+select_requested_urls_sql = """SELECT URL FROM URLS"""
+insert_requested_urls_sql = """INSERT INTO URLS(URL) VALUES ('%s')"""
+
