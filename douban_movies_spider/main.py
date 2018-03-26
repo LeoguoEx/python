@@ -57,13 +57,14 @@ class SpiderStarter(object):
 
             if len(self.movies) > 10:
                 db = self.db.connectDB()
+                for element in urls:
+                    sql = Sqls.insert_requested_urls_sql % (element)
+                    self.db.excuteSql(db, sql)
                 for movie in self.movies:
                     sql = Sqls.insert_table_sql % (movie.name, movie.director, movie.writer, movie.actors, movie.type, \
                                                    movie.location, movie.language, movie.time, movie.time_length, movie.imdbLink, \
                                                    movie.description, movie.rating)
-                    self.db.excuteSql(db, sql)
-                for element in urls:
-                    sql = Sqls.insert_requested_urls_sql % (element)
+                    print("sql : {0}".format(sql))
                     self.db.excuteSql(db, sql)
                 self.db.disconnectDB(db)
                 self.movies.clear()
