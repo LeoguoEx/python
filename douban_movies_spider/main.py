@@ -7,6 +7,7 @@ import time
 from movie import Movie
 import Sqls
 
+
 class SpiderStarter(object):
 
     def __init__(self):
@@ -46,11 +47,16 @@ class SpiderStarter(object):
 
     def scrapy(self):
         urls = []
+        index = 0
         while self.spidering:
+            #获取访问链接
             url = self.spider.get_url()
+            #获取网页信息
             html = self.spider.get_next(url)
             movie = Movie()
             new_urls = movie.parseHtml(html)
+            if movie.name == '':
+                continue
             self.movies.append(movie)
             self.spider.add_request_urls(new_urls)
             urls.append(url)
@@ -58,7 +64,7 @@ class SpiderStarter(object):
             if len(self.movies) > 10:
                 db = self.db.connectDB()
                 for element in urls:
-                    sql = Sqls.insert_requested_urls_sql % (element)
+                    sql = Sqls.insert_requested_urls_sql % element
                     self.db.excuteSql(db, sql)
                 for movie in self.movies:
                     sql = Sqls.insert_table_sql % (movie.name, movie.director, movie.writer, movie.actors, movie.type, \
@@ -71,6 +77,12 @@ class SpiderStarter(object):
                 urls.clear()
 
             time.sleep(3)
+
+            #爬100条休息半小时
+            index += 1
+            if index > 10:
+                time.sleep(1800)
+                index = 0
 
     def getproxies(self):
         while self.spidering:
